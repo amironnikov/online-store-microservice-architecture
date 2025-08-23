@@ -5,7 +5,7 @@ import ru.amironnikov.common.Product;
 import java.util.List;
 import java.util.UUID;
 
-public interface ProductService {
+public interface ProductCache {
     List<Product> getProducts();
 
     Product get(UUID id);

@@ -3,3 +3,4 @@
 
 1) Урок 15 ConcurrentHashMap в ProductServiceImpl
 2) Урок 33 Swagger: //TOTO скрины 
+3) Урок 34 Protobuf and grpc: product service

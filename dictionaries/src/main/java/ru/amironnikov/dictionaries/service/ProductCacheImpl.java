@@ -15,15 +15,15 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
-public class ProductServiceImpl implements ProductService {
+public class ProductCacheImpl implements ProductCache {
 
-    private static final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProductCacheImpl.class);
 
     private final Map<UUID, Product> cache = new ConcurrentHashMap<>();
 
     private final ProductRepository repository;
 
-    public ProductServiceImpl(ProductRepository repository) {
+    public ProductCacheImpl(ProductRepository repository) {
         this.repository = repository;
     }
 
