@@ -1,0 +1,13 @@
+server:
+  port: 8084
+
+minio:
+  endpoint: http://localhost:9000
+  accessKey: amironnikov
+  secretKey: LdKzOp9_G
+  bucketName: images
+
+logging:
+  level:
+    root: INFO
+    ru.amironnikov: DEBUG
