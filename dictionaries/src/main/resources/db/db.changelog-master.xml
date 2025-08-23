@@ -6,7 +6,7 @@
 
     <changeSet id="1" author="amironnikov">
         <createTable tableName="product">
-            <column name="id" type="uuid">
+            <column name="id" type="uuid" defaultValueComputed="gen_random_uuid()">
                 <constraints primaryKey="true"/>
             </column>
             <column name="name" type="varchar"/>
@@ -15,6 +15,43 @@
             <column name="weight" type="float"/>
             <column name="guarantee" type="int"/>
         </createTable>
+    </changeSet>
+    <changeSet id="2" author="amironnikov">
+        <insert tableName="product">
+            <column name="name" value="Product '1'"/>
+            <column name="description" value="Some description"/>
+            <column name="cost" valueNumeric="100"/>
+            <column name="weight" valueNumeric="10.0"/>
+            <column name="guarantee" valueNumeric="1"/>
+        </insert>
+        <insert tableName="product">
+            <column name="name" value="Product '2'"/>
+            <column name="description" value="Some description 2"/>
+            <column name="cost" valueNumeric="100"/>
+            <column name="weight" valueNumeric="10.0"/>
+            <column name="guarantee" valueNumeric="1"/>
+        </insert>
+        <insert tableName="product">
+            <column name="name" value="Product '3'"/>
+            <column name="description" value="Some description 3"/>
+            <column name="cost" valueNumeric="1000"/>
+            <column name="weight" valueNumeric="12.0"/>
+            <column name="guarantee" valueNumeric="2"/>
+        </insert>
+        <insert tableName="product">
+            <column name="name" value="Product '4'"/>
+            <column name="description" value="Some description 4"/>
+            <column name="cost" valueNumeric="1005"/>
+            <column name="weight" valueNumeric="220.5"/>
+            <column name="guarantee" valueNumeric="1"/>
+        </insert>
+        <insert tableName="product">
+            <column name="name" value="Product '5'"/>
+            <column name="description" value="Some description 5"/>
+            <column name="cost" valueNumeric="32"/>
+            <column name="weight" valueNumeric="1.0"/>
+            <column name="guarantee" valueNumeric="2"/>
+        </insert>
     </changeSet>
 
 </databaseChangeLog>
