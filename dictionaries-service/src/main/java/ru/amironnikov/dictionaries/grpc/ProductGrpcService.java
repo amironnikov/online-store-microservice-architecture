@@ -44,9 +44,9 @@ public class ProductGrpcService extends ProductServiceGrpc.ProductServiceImplBas
                             .build();
                 }).toList());
 
+        logger.debug("Product list return <success>, count: {}", products.size());
+
         responseObserver.onNext(resultBuilder.build());
         responseObserver.onCompleted();
-
-        logger.debug("Product list return <success>");
     }
 }

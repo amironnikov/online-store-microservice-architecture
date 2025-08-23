@@ -1,5 +1,5 @@
 rootProject.name = "online-store-microservice-architecture"
-include("order")
-include("payment")
-include("dictionaries")
-include("common")
+include("order-service")
+include("payment-service")
+include("dictionaries-service")
+include("common-lib")
