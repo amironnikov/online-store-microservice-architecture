@@ -1,0 +1,56 @@
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.9.4'
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '3.5.4'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+apply plugin: 'java'
+apply plugin: 'com.google.protobuf'
+
+repositories {
+    mavenCentral()
+}
+
+def grpcVersion = '1.66.0'
+
+dependencies {
+
+    implementation(project(":common"))
+
+    implementation("net.devh:grpc-server-spring-boot-starter:3.1.0.RELEASE")
+    implementation("com.google.protobuf:protobuf-java:4.27.3")
+    implementation ("javax.annotation:javax.annotation-api:1.3.2")
+    implementation("org.postgresql:postgresql:42.7.7")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+}
+
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:4.27.3'
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}
+
+apply plugin: 'idea'
+
+apply plugin: 'application'
+
+startScripts.enabled = false
