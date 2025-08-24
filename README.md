@@ -5,10 +5,9 @@
 2) Урок 15 ConcurrentHashMap в ProductServiceImpl
 3) Урок 33 Swagger: http://localhost:8084/swagger-ui/index.html imageservice 
 4) Урок 34 Protobuf and grpc: product service
-5) Урок 4 Memory management. JVM memory structure: использование SoftReference в image-service: ImageServiceImpl
+5) Урок 4 Memory management. JVM memory structure: использование SoftReference в image-service: ImageSoftReferenceServiceImpl
 6) 
-7) 
-8) 
+7)
 Урок 7 Memory Dump и Урок 14 Разбор JMeter и организация нагрузочного тестирования.
 Подадим нагрузку на сервис изображений с помощью JMeter
 ![img_1.png](img_1.png)
@@ -20,7 +19,7 @@
 
 ![img.png](img.png)
 
-В отчёте видно, что больше всего памяти потребляет HashMa в классе ImageServiceImpl.
+В отчёте видно, что больше всего памяти потребляет HashMap в классе ImageServiceImpl.
 Как и ожидалось, т.к. там находится кэш изображений:
 
 ![img_2.png](img_2.png)
@@ -39,3 +38,5 @@
 
 Урок 9 GraalVM - попробовать добавить в другие модули ????
 Урок 16 ReadWriteLock - применить в другом кэше
+Урок 4 Memory management. JVM memory structure: использование SoftReference 
+Урок 13 JMH: сравнить три кэша

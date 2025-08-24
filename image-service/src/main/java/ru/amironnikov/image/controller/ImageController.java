@@ -20,7 +20,7 @@ public class ImageController implements OpenApi {
 
     private final ImageService imageService;
 
-    public ImageController(@Qualifier("imageServiceImpl") ImageService imageService) {
+    public ImageController(@Qualifier("imageOffHeapServiceImpl") ImageService imageService) {
         this.imageService = imageService;
     }
 
