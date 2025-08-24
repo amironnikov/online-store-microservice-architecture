@@ -32,7 +32,7 @@ public class ImageController implements OpenApi {
             @RequestBody byte[] imageBytes) throws IOException {
         logger.debug("Load image for product: {}, size: {}", id, imageBytes.length);
         imageService.load(id, imageBytes);
-        logger.debug("Image for product: {} <Success>", id);
+        logger.debug("Image for product: {} <Saved>", id);
         return StatusResponse.ok();
     }
 

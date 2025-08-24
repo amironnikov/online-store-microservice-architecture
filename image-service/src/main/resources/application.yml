@@ -7,6 +7,12 @@ minio:
   secretKey: LdKzOp9_G
   bucketName: images
 
+
+spring:
+  cache:
+    jcache:
+      config: 'classpath:ehcache.xml'
+
 logging:
   level:
     root: INFO
