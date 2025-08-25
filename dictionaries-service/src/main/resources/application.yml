@@ -6,7 +6,7 @@ grpc:
 
 spring:
   application:
-    name: dictionaries
+    name: dictionaries-service
   datasource:
     url: jdbc:postgresql://localhost:5432/dictionaries
     username: postgres

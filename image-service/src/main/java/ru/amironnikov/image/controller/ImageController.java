@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.amironnikov.common.RestEndPoint;
-import ru.amironnikov.common.dto.StatusResponse;
+import ru.amironnikov.common.dto.common.StatusResponse;
 import ru.amironnikov.image.openapi.OpenApi;
 import ru.amironnikov.image.service.ImageService;
 

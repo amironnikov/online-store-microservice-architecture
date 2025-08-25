@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="1" author="amironnikov">
+        <createTable tableName="orders">
+            <column name="id" type="uuid" defaultValueComputed="gen_random_uuid()">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_id" type="uuid"/>
+            <column name="zip_code" type="int"/>
+            <column name="created" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="updated" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="amironnikov">
+        <createTable tableName="order_product">
+            <column name="order_id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="product_id" type="uuid"/>
+            <column name="quantity" type="int"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

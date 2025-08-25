@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.PathVariable;
-import ru.amironnikov.common.dto.StatusResponse;
+import ru.amironnikov.common.dto.common.StatusResponse;
 
 import java.io.IOException;
 import java.util.UUID;

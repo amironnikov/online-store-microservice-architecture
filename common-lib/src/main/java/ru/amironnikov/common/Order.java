@@ -1,12 +1,19 @@
 package ru.amironnikov.common;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 public interface Order {
-    UUID id();
+    UUID getId();
 
-    List<Product> products();
+    UUID userId();
 
-    int totalCost();
+    int zipCode();
+
+    LocalDateTime created();
+
+    LocalDateTime updated();
+
+    List<? extends OrderProduct>  products();
 }

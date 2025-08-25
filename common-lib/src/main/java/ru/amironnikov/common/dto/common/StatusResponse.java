@@ -1,4 +1,4 @@
-package ru.amironnikov.common.dto;
+package ru.amironnikov.common.dto.common;
 
 public record StatusResponse(
         String status

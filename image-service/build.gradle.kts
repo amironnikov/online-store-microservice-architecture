@@ -2,6 +2,7 @@ plugins {
     id ("org.springframework.boot") version "3.5.4"
     id ("io.spring.dependency-management") version "1.1.7"
     id ("java")
+    id("me.champeau.jmh") version "0.7.3"
 }
 
 group = "ru.amironnikov"
@@ -35,3 +36,7 @@ dependencies {
     implementation("io.minio:minio:$annotationApiVersion")
 }
 
+jmh {
+    excludes.addAll("*")
+    includes.addAll("ru.amironnikov.image.ImageCachesBenchmark")
+}

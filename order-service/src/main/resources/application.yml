@@ -1,2 +1,15 @@
 server:
   port: 8083
+
+spring:
+  application:
+    name: order-service
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/order
+    username: postgres
+    password: postgres
+
+logging:
+  level:
+    root: INFO
+    ru.amironnikov: DEBUG
