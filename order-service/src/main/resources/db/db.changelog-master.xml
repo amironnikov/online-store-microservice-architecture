@@ -13,6 +13,9 @@
             <column name="zip_code" type="int"/>
             <column name="created" type="TIMESTAMP WITHOUT TIME ZONE"/>
             <column name="updated" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="status" type="varchar(50)"/>
+            <column name="total_cost" type="int"/>
+            <column name="total_weight" type="float8"/>
         </createTable>
     </changeSet>
     <changeSet id="2" author="amironnikov">

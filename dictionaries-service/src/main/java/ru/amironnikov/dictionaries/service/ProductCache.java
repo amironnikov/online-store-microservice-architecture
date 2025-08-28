@@ -1,6 +1,7 @@
 package ru.amironnikov.dictionaries.service;
 
-import ru.amironnikov.common.Product;
+
+import ru.amironnikov.dictionaries.dto.Product;
 
 import java.util.List;
 import java.util.UUID;

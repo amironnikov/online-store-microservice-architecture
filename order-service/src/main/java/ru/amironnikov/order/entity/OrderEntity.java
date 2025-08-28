@@ -5,9 +5,11 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
-import ru.amironnikov.common.Order;
-import ru.amironnikov.common.OrderProduct;
-import ru.amironnikov.common.dto.order.OrderDto;
+import ru.amironnikov.order.dto.Order;
+import ru.amironnikov.order.dto.OrderDto;
+import ru.amironnikov.order.dto.OrderProduct;
+import ru.amironnikov.order.dto.OrderStatus;
+
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -25,6 +27,9 @@ public class OrderEntity implements Order {
     @Column("zip_code")
     private int zipCode;
 
+    @Column("status")
+    private OrderStatus status;
+
     @CreatedDate
     @Column("created")
     private LocalDateTime created;
@@ -33,26 +38,40 @@ public class OrderEntity implements Order {
     @Column("updated")
     private LocalDateTime updated;
 
+    @Column("total_cost")
+    private int totalCost;
+
+    @Column("total_weight")
+    private double totalWeight;
+
     public OrderEntity() {
 
     }
 
-    public OrderEntity(OrderDto order) {
+    public OrderEntity(OrderDto order, int totalCost, double totalWeight) {
         this(
                 order.id(),
                 order.userId(),
-                order.zipCode()
+                order.zipCode(),
+                OrderStatus.CREATED,
+                totalCost,
+                totalWeight
         );
     }
 
-    public OrderEntity(UUID id, UUID userId, int zipCode) {
+    public OrderEntity(UUID id, UUID userId,
+                       int zipCode, OrderStatus status,
+                       int totalCost, double totalWeight) {
         this.id = id;
         this.userId = userId;
         this.zipCode = zipCode;
+        this.status = status;
+        this.totalCost = totalCost;
+        this.totalWeight = totalWeight;
     }
 
     @Override
-    public UUID getId() {
+    public UUID id() {
         return id;
     }
 
@@ -84,6 +103,15 @@ public class OrderEntity implements Order {
         return updated;
     }
 
+    @Override
+    public OrderStatus status() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
     public void setCreated(LocalDateTime created) {
         this.created = created;
     }
@@ -99,5 +127,23 @@ public class OrderEntity implements Order {
 
     public void setZipCode(int zipCode) {
         this.zipCode = zipCode;
+    }
+
+    @Override
+    public int totalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(int totalCost) {
+        this.totalCost = totalCost;
+    }
+
+    @Override
+    public double totalWeight() {
+        return totalWeight;
+    }
+
+    public void setTotalWeight(double totalWeight) {
+        this.totalWeight = totalWeight;
     }
 }

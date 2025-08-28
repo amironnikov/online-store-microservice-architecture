@@ -1,12 +1,14 @@
 package ru.amironnikov.order.controller;
 
 import org.springframework.web.bind.annotation.*;
+
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import ru.amironnikov.common.RestEndPoint;
-import ru.amironnikov.common.dto.common.CreatedEntityResponse;
-import ru.amironnikov.common.dto.order.OrderDto;
-import ru.amironnikov.common.dto.order.OrderListDto;
+
+import ru.amironnikov.order.common.RestEndPoint;
+import ru.amironnikov.order.dto.CreatedEntityResponse;
+import ru.amironnikov.order.dto.OrderDto;
+import ru.amironnikov.order.dto.OrderListDto;
 import ru.amironnikov.order.service.OrderService;
 
 import java.util.UUID;

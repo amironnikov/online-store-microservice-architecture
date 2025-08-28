@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import productService.ProductOuterClass;
 import productService.ProductServiceGrpc;
-import ru.amironnikov.common.Product;
+import ru.amironnikov.dictionaries.dto.Product;
 import ru.amironnikov.dictionaries.service.ProductCache;
 
 import java.util.List;

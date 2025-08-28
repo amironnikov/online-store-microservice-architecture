@@ -9,6 +9,7 @@ group = "ru.amironnikov"
 version = "1.0.0"
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
@@ -19,9 +20,6 @@ val jaxbApiVersion = "2.3.1"
 val jaxbImplVersion = "2.3.6"
 
 dependencies {
-
-    //common
-    implementation(project(":common-lib"))
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$swaggerVersion")

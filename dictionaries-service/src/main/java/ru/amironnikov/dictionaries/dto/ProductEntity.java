@@ -3,7 +3,6 @@ package ru.amironnikov.dictionaries.dto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import ru.amironnikov.common.Product;
 
 import java.util.UUID;
 

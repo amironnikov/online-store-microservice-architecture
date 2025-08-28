@@ -1,6 +1,4 @@
-package ru.amironnikov.common.dto.order;
-
-import ru.amironnikov.common.OrderProduct;
+package ru.amironnikov.order.dto;
 
 import java.util.UUID;
 

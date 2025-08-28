@@ -4,7 +4,7 @@ import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import ru.amironnikov.common.Product;
+import ru.amironnikov.dictionaries.dto.Product;
 import ru.amironnikov.dictionaries.dto.ProductDto;
 import ru.amironnikov.dictionaries.repository.ProductRepository;
 

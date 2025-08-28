@@ -1,4 +1,4 @@
-package ru.amironnikov.common;
+package ru.amironnikov.image.common;
 
 public interface RestEndPoint {
     String API_V1 = "/api/v1";

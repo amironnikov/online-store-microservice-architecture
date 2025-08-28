@@ -9,6 +9,12 @@ spring:
     username: postgres
     password: postgres
 
+grpc:
+  client:
+    products-grpc-service:
+      address: "static://localhost:9090"
+      negotiationType: "PLAINTEXT"
+
 logging:
   level:
     root: INFO

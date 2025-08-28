@@ -1,11 +1,11 @@
-package ru.amironnikov.common;
+package ru.amironnikov.order.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 public interface Order {
-    UUID getId();
+    UUID id();
 
     UUID userId();
 
@@ -15,5 +15,11 @@ public interface Order {
 
     LocalDateTime updated();
 
+    OrderStatus status();
+
+    int totalCost();
+
     List<? extends OrderProduct>  products();
+
+    double totalWeight();
 }

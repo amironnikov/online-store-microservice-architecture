@@ -1,13 +1,14 @@
-package ru.amironnikov.common.dto.order;
+package ru.amironnikov.order.dto;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record OrderListDto(
         UUID id,
-        int productsCount,
         int totalCost,
+        double totalWeight,
         int zipCode,
+        OrderStatus status,
         LocalDateTime created,
         LocalDateTime updated
 ) {

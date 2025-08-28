@@ -3,6 +3,7 @@ plugins {
     id ("io.spring.dependency-management") version "1.1.7"
     id ("java")
     id ("org.liquibase.gradle") version "2.2.0"
+    id ("com.google.protobuf") version "0.9.5"
 }
 
 group = "ru.amironnikov"
@@ -15,12 +16,17 @@ java {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
 var postgresqlVersion = "42.7.7"
 var liquibaseCoreVersion = "4.2.2"
 var r2dbcPostgresVersion = "1.0.5.RELEASE"
+val grpcVersion = "1.66.0"
+val grpcClientVersion = "3.1.0.RELEASE"
+val protobufJavaVersion = "4.27.3"
+val annotationApiVersion = "1.3.2"
 
 dependencies {
 
@@ -28,15 +34,18 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
     implementation("org.postgresql:r2dbc-postgresql:$r2dbcPostgresVersion")
 
+    //grpc
+    implementation("net.devh:grpc-client-spring-boot-starter:$grpcClientVersion")
+    implementation("com.google.protobuf:protobuf-java:$protobufJavaVersion")
+    implementation("javax.annotation:javax.annotation-api:$annotationApiVersion")
+
     //common
-    implementation(project(":common-lib"))
+        //implementation(project(":common-lib"))
+   // implementation("ru.amironnikov:common-lib:1.0.1")
 
     //liquibase
     liquibaseRuntime ("org.liquibase:liquibase-core:${liquibaseCoreVersion}")
     liquibaseRuntime ("org.postgresql:postgresql:${postgresqlVersion}")
-
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
 liquibase {
@@ -55,6 +64,21 @@ liquibase {
     runList = "main"
 }
 
-tasks.test {
-    useJUnitPlatform()
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:4.27.3"
+    }
+    plugins {
+        create("grpc") {
+            artifact = "io.grpc:protoc-gen-grpc-java:$grpcVersion"
+        }
+    }
+    generateProtoTasks {
+        all().forEach { task ->
+            task.plugins {
+                create("grpc")
+            }
+        }
+    }
 }
+

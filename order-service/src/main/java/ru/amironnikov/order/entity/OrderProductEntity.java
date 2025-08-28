@@ -3,8 +3,7 @@ package ru.amironnikov.order.entity;
 
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
-import ru.amironnikov.common.OrderProduct;
-
+import ru.amironnikov.order.dto.OrderProduct;
 
 import java.util.UUID;
 

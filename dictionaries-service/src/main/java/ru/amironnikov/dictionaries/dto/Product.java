@@ -1,4 +1,4 @@
-package ru.amironnikov.common;
+package ru.amironnikov.dictionaries.dto;
 
 import java.util.UUID;
 
