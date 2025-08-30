@@ -22,6 +22,27 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
 
+resilience4j:
+  ratelimiter:
+    instances:
+      rps_limiter:
+        limitForPeriod: 2
+        limitRefreshPeriod: 1s
+        timeoutDuration: 0s
+  circuitbreaker:
+    configs:
+      default:
+        slidingWindowType: COUNT_BASED
+        failureRateThreshold: 50
+        slidingWindowSize: 10
+        waitDurationInOpenState: 10s
+        minimumNumberOfCalls: 10
+        ringBufferSizeInHalfOpenState: 5
+        ringBufferSizeInClosedState: 5
+    instances:
+      products_circuit_breaker:
+        baseConfig: default
+
 logging:
   level:
     root: INFO
