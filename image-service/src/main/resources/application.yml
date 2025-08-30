@@ -9,9 +9,16 @@ minio:
 
 
 spring:
+  application:
+    name: image-service
   cache:
     jcache:
       config: 'classpath:ehcache.xml'
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
 
 logging:
   level:

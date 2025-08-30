@@ -43,7 +43,11 @@ dependencies {
     implementation ("javax.annotation:javax.annotation-api:${annotationApiVersion}")
     implementation ("org.postgresql:postgresql:${postgresqlVersion}")
 
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.3.0")
+    implementation("com.netflix.eureka:eureka-client-jersey3:2.0.5")
+
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 }
 
 liquibase {

@@ -1,7 +1,5 @@
 package ru.amironnikov.image.service.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.amironnikov.image.service.ImageService;
 
