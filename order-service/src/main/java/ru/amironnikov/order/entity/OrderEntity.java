@@ -50,7 +50,6 @@ public class OrderEntity implements Order {
 
     public OrderEntity(OrderDto order, int totalCost, double totalWeight) {
         this(
-                order.id(),
                 order.userId(),
                 order.zipCode(),
                 OrderStatus.CREATED,
@@ -59,10 +58,9 @@ public class OrderEntity implements Order {
         );
     }
 
-    public OrderEntity(UUID id, UUID userId,
+    public OrderEntity(UUID userId,
                        int zipCode, OrderStatus status,
                        int totalCost, double totalWeight) {
-        this.id = id;
         this.userId = userId;
         this.zipCode = zipCode;
         this.status = status;

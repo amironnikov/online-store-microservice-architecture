@@ -1,6 +1,6 @@
 grpc:
   server:
-    port: 9090
+    port: 9091
     security:
       enabled: false
 
@@ -8,9 +8,9 @@ spring:
   application:
     name: dictionaries-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/dictionaries
-    username: postgres
-    password: postgres
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
 eureka:

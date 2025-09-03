@@ -5,14 +5,14 @@ spring:
   application:
     name: order-service
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/order
-    username: postgres
-    password: postgres
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
 
 grpc:
   client:
     products-grpc-service:
-      address: "static://localhost:9090"
+      address: ${SPRING_GRPC_ADDRESS}
       negotiationType: "PLAINTEXT"
 
 eureka:
@@ -42,6 +42,19 @@ resilience4j:
     instances:
       products_circuit_breaker:
         baseConfig: default
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
 
 logging:
   level:

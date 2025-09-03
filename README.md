@@ -1,15 +1,19 @@
 # online-store-microservice-architecture
-Выпускной проект по курсу OTUS Java Developer Advanced
+Выпускной проект по курсу **OTUS Java Developer Advanced**
 
-1) Java 11 vs 17 vs 21. везде используется Open JDK 21
-2) Урок 15 ConcurrentHashMap в ProductServiceImpl
-3) Урок 33 Swagger: http://localhost:8084/swagger-ui/index.html imageservice 
-4) Урок 34 Protobuf and grpc: product service
-5) Урок 4 Memory management. JVM memory structure: использование SoftReference в image-service: 
+1) Java 11 vs 17 vs 21.
+   Во всех сервисах используется Open JDK 21.
+2) Урок 15. Java.util.concurrent. Atomics, ConcurrentHashMap, ConcurrentSkipListMap.
+
+ConcurrentHashMap используется в классе ProductServiceImpl и др.
+
+3) Урок 33. Swagger. http://localhost:8084/swagger-ui/index.html imageservice 
+4) Урок 34. Protobuf and grpc: product service
+5) Урок 4. Memory management. JVM memory structure: использование SoftReference в image-service: 
 класс ru.amironnikov.image.service.impl.ImageSoftReferenceServiceImpl
 6) 
 7)
-Урок 7 Memory Dump и Урок 14 Разбор JMeter и организация нагрузочного тестирования.
+Урок 7. Memory Dump и Урок 14 Разбор JMeter и организация нагрузочного тестирования.
 Подадим нагрузку на сервис изображений с помощью JMeter
 ![img_1.png](img_1.png)
 Подождём пару минут и соберем дамп памяти командой 
@@ -25,19 +29,18 @@
 
 ![img_2.png](img_2.png)
 
-9) Для миграций использовался Liquibase - пункт 3 требований (Word файл "тз по проектной работе")
-10) Каждое приложение работает со своей схемой данных, в которых есть справочники 
-(Word файл "тз по проектной работе")- пункт 2 требований (Word файл "тз по проектной работе")
-11) В сервисе image-service используется off-heap cache в классе
-ru.amironnikov.image.service.impl.ImageOffHeapServiceImpl
+9) Для миграций использовался Liquibase
+10) Каждое приложение работает со своей схемой данных, в которых есть справочники
+11) Урок 8. "Off-heap".
 
+В сервисе image-service используется off-heap cache в классе
+ru.amironnikov.image.service.impl.ImageOffHeapServiceImpl
 
 ![img_3.png](img_3.png)
 
 ![img_4.png](img_4.png)
-Это Урок 8 "Off-heap"
 
-12) Урок 13 JMH.
+12) Урок 13. JMH.
 В сервисе image-service есть три реализации кэширования для изображений:
 off-heap, concurrent map, soft-reference + ReadWriteLock (Урок 16).
 Написан сравнительный JMH тест для этих трех имплементаций.
@@ -54,7 +57,7 @@ off-heap, concurrent map, soft-reference + ReadWriteLock (Урок 16).
 
 14) Урок 25. Вспоминаем Docker. У всех сервисов есть Dockerfile, готовы к запуску в Docker.
 
-15) Урок 18. Профилирование java приложений. Thread dump, JFR
+15) Урок 18. Профилирование java приложений. Thread dump, JFR.
 
 Подадим нагрузку на сервис image-service, запросами на получение несуществующего изображения:
 
@@ -77,7 +80,7 @@ off-heap, concurrent map, soft-reference + ReadWriteLock (Урок 16).
 
 ![img_10.png](img_10.png)
 
-16) Урок 19. Профилирование java приложений. Работа с VisualVM
+16) Урок 19. Профилирование java приложений. Работа с VisualVM.
 
 Имитируем искусственную проблему в приложении, добавив в класс ImageConcurrentMapServiceImpl 
 удержание lock в течение 5 секунд.
@@ -86,7 +89,25 @@ off-heap, concurrent map, soft-reference + ReadWriteLock (Урок 16).
 
 ![img_11.png](img_11.png)
 
+17) Урок 31. Проектирование и архитектура в разрезе микросервисов.
 
+Были использованы следующие паттерны:
+*     Database per service
+*     Api Gateway
+*     Service registry
+*     Rate Limiter
+*     Circuit Breaker
+*     Health Check
+   
+18) Урок 28. Метрики.
+
+Во всех сервисах подключен Actuator.
+В order-service добавлен счетчик количества запросов на создание заказа "online_store_create_order_total.
+Пример работы метрики:
+
+![img_12.png](img_12.png)
+
+19) Урок 29. Prometheus & Grafana
 
 shift +win + s = screen
 

@@ -1,5 +1,7 @@
 package ru.amironnikov.order.service.impl;
 
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,15 +29,20 @@ public class OrderServiceImpl implements OrderService {
 
     private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
+    private final MeterRegistry meterRegistry;
+    private Counter createOrderCounter;
+
+
     private final Map<String, Product> productsCostMap = new ConcurrentHashMap<>();
 
     private final OrderReactiveRepository orderRepository;
     private final OrderProductReactiveRepository productRepository;
     private final ProductGrpcService productGrpcService;
 
-    public OrderServiceImpl(OrderReactiveRepository orderRepository,
+    public OrderServiceImpl(MeterRegistry meterRegistry, OrderReactiveRepository orderRepository,
                             OrderProductReactiveRepository productRepository,
                             ProductGrpcService productGrpcService) {
+        this.meterRegistry = meterRegistry;
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
         this.productGrpcService = productGrpcService;
@@ -62,6 +69,8 @@ public class OrderServiceImpl implements OrderService {
 
         int totalCost = totalCost(order);
         double totalWeight = totalWeight(order);
+
+        createOrderCounter.increment();
 
         return orderRepository.save(
                 new OrderEntity(order, totalCost, totalWeight)

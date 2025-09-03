@@ -35,6 +35,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-aop")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.3.0")
+    runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 
     implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j:3.3.0")
 
@@ -56,7 +57,7 @@ liquibase {
             arguments = mapOf(
                 "logLevel" to "info",
                 "changeLogFile" to "src/main/resources/db/db.changelog-master.xml",
-                "url" to "jdbc:postgresql://localhost:5432/order",
+                "url" to "jdbc:postgresql://localhost:5433/order",
                 "username" to "postgres",
                 "password" to "postgres",
                 "driver" to "org.postgresql.Driver"
