@@ -57,6 +57,7 @@ public class OrderServiceImpl implements OrderService {
                         productsCostMap.put(product.getId(), product)
 
                 );
+        createOrderCounter = meterRegistry.counter("online_store_create_order_total");
         logger.debug("Local cache products init <success>, size: {}", productsCostMap.size());
     }
 
