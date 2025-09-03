@@ -15,19 +15,19 @@ ConcurrentHashMap используется в классе ProductServiceImpl и
 7)
 Урок 7. Memory Dump и Урок 14 Разбор JMeter и организация нагрузочного тестирования.
 Подадим нагрузку на сервис изображений с помощью JMeter
-![img_1.png](img_1.png)
+![img_1.png](images-for-report/img_1.png)
 Подождём пару минут и соберем дамп памяти командой 
    ```bash
       jmap -dump:format=b,file=heapdump.hprof,live <pid>
    ```
 Загрузим дамп в Eclipse Memory Analyzer:
 
-![img.png](img.png)
+![img.png](images-for-report/img.png)
 
 В отчёте видно, что больше всего памяти потребляет HashMap в классе ImageServiceImpl.
 Как и ожидалось, т.к. там находится кэш изображений:
 
-![img_2.png](img_2.png)
+![img_2.png](images-for-report/img_2.png)
 
 9) Для миграций использовался Liquibase
 10) Каждое приложение работает со своей схемой данных, в которых есть справочники
@@ -36,9 +36,9 @@ ConcurrentHashMap используется в классе ProductServiceImpl и
 В сервисе image-service используется off-heap cache в классе
 ru.amironnikov.image.service.impl.ImageOffHeapServiceImpl
 
-![img_3.png](img_3.png)
+![img_3.png](images-for-report/img_3.png)
 
-![img_4.png](img_4.png)
+![img_4.png](images-for-report/img_4.png)
 
 12) Урок 13. JMH.
 В сервисе image-service есть три реализации кэширования для изображений:
@@ -48,7 +48,7 @@ off-heap, concurrent map, soft-reference + ReadWriteLock (Урок 16).
 
 Получены следующие результаты тестов производительности:
 
-![img_5.png](img_5.png)
+![img_5.png](images-for-report/img_5.png)
 
 Таким образом быстрее всего работает локальный кэш с ConcurrentHashMap.
 
@@ -61,24 +61,24 @@ off-heap, concurrent map, soft-reference + ReadWriteLock (Урок 16).
 
 Подадим нагрузку на сервис image-service, запросами на получение несуществующего изображения:
 
-![img_6.png](img_6.png)
+![img_6.png](images-for-report/img_6.png)
 
 
 Запросим журнал JFR:
 
-![img_7.png](img_7.png)
+![img_7.png](images-for-report/img_7.png)
 
 Откроем журнал в JMC:
 
-![img_8.png](img_8.png)
+![img_8.png](images-for-report/img_8.png)
 
 Самый популярный метод:
 
-![img_9.png](img_9.png)
+![img_9.png](images-for-report/img_9.png)
 
 Очень большое количество исключений - единственная проблема:
 
-![img_10.png](img_10.png)
+![img_10.png](images-for-report/img_10.png)
 
 16) Урок 19. Профилирование java приложений. Работа с VisualVM.
 
@@ -87,7 +87,7 @@ off-heap, concurrent map, soft-reference + ReadWriteLock (Урок 16).
 Подадим нагрузку на сервис: 
 Подключимся к приложению через VisualVM и находим проблему во вкладке "Locks":
 
-![img_11.png](img_11.png)
+![img_11.png](images-for-report/img_11.png)
 
 17) Урок 31. Проектирование и архитектура в разрезе микросервисов.
 
@@ -105,9 +105,13 @@ off-heap, concurrent map, soft-reference + ReadWriteLock (Урок 16).
 В order-service добавлен счетчик количества запросов на создание заказа "online_store_create_order_total.
 Пример работы метрики:
 
-![img_12.png](img_12.png)
+![img_12.png](images-for-report/img_12.png)
 
 19) Урок 29. Prometheus & Grafana
+
+Настроены Prometheus и Grafana, добавлены в docker-compose, к проекту прикреплен дашборд:
+[mironnikov-dashboard.json](grafana%2Fdashboards%2Fmironnikov-dashboard.json)
+
 
 shift +win + s = screen
 
