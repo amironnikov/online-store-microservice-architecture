@@ -103,10 +103,13 @@ services:
     depends_on:
       postgres-db-dictionaries:
         condition: service_healthy
+      service-registry:
+        condition: service_started
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db-dictionaries:5432/dictionaries
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_EUREKA_URL: http://service-registry:8761/eureka/
 
   order-service:
     build:
@@ -124,11 +127,26 @@ services:
         condition: service_healthy
       dictionaries-service:
         condition: service_started
+      service-registry:
+        condition: service_started
     environment:
       SPRING_DATASOURCE_URL: r2dbc:postgresql://postgres-db:5432/order
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_GRPC_ADDRESS: static://dictionaries-service:9090
+      SPRING_EUREKA_URL: http://service-registry:8761/eureka/
+
+  service-registry:
+    build:
+      context: ./service-registry
+      dockerfile: Dockerfile
+    hostname: service-registry
+    container_name: service-registry
+    ports:
+      - "8761:8761"
+    networks:
+      - online_shop_net
+    restart: always
 
 networks:
   online_shop_net:

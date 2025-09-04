@@ -1,12 +1,21 @@
-FROM bellsoft/liberica-openjdk-alpine:21 as jdk
+FROM gradle:jdk21 AS build
 
-ENV APP_HOME=/app
-WORKDIR $APP_HOME
-COPY . .
+WORKDIR /app
 
-RUN chmod +x ./gradlew && ./gradlew build
+COPY gradlew .
+COPY gradle gradle/
+COPY build.gradle.kts .
 
+COPY src src/
+
+RUN ./gradlew build -x test
 
 FROM bellsoft/liberica-openjdk-alpine:21
-COPY --from=jdk /app/build/libs/service-registry-1.0.0.jar /app.jar
-CMD ["java", "-jar", "/app.jar"]
+
+WORKDIR /app
+
+COPY --from=build /app/build/libs/*.jar /app/app.jar
+
+EXPOSE 8761
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
