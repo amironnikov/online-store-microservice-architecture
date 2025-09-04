@@ -133,7 +133,7 @@ services:
       SPRING_DATASOURCE_URL: r2dbc:postgresql://postgres-db:5432/order
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
-      SPRING_GRPC_ADDRESS: static://dictionaries-service:9090
+      SPRING_GRPC_ADDRESS: static://dictionaries-service:9091
       SPRING_EUREKA_URL: http://service-registry:8761/eureka/
 
   service-registry:
@@ -147,6 +147,25 @@ services:
     networks:
       - online_shop_net
     restart: always
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    hostname: api-gateway
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    networks:
+      - online_shop_net
+    restart: always
+    depends_on:
+      order-service:
+        condition: service_started
+      dictionaries-service:
+        condition: service_started
+    environment:
+      SPRING_EUREKA_URL: http://service-registry:8761/eureka/
 
 networks:
   online_shop_net:
