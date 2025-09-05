@@ -8,6 +8,8 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - online_shop_net
 
   kafka:
     image: confluentinc/cp-kafka:7.4.4
@@ -20,11 +22,13 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://kafka:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_INTERNAL://kafka:29092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT_INTERNAL
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+    networks:
+      - online_shop_net
 
   prometheus:
     image: prom/prometheus
@@ -129,12 +133,38 @@ services:
         condition: service_started
       service-registry:
         condition: service_started
+      kafka:
+        condition: service_started
     environment:
       SPRING_DATASOURCE_URL: r2dbc:postgresql://postgres-db:5432/order
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_GRPC_ADDRESS: static://dictionaries-service:9091
       SPRING_EUREKA_URL: http://service-registry:8761/eureka/
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+
+  payment-service:
+    build:
+      context: ./payment-service
+      dockerfile: Dockerfile
+    hostname: payment-service
+    container_name: payment-service
+    ports:
+      - "8082:8082"
+    networks:
+      - online_shop_net
+    restart: always
+    depends_on:
+      service-registry:
+        condition: service_started
+      kafka:
+        condition: service_started
+    environment:
+      SPRING_EUREKA_URL: http://service-registry:8761/eureka/
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/order
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
 
   service-registry:
     build:

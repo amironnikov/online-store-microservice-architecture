@@ -1,4 +1,4 @@
-package ru.amironnikov;
+package ru.amironnikov.payment;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

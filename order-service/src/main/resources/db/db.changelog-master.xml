@@ -27,5 +27,23 @@
             <column name="quantity" type="int"/>
         </createTable>
     </changeSet>
+    <changeSet id="3" author="amironnikov">
+        <createTable tableName="user_account">
+            <column name="user_id" type="uuid"/>
+            <column name="credit_limit" type="int"/>
+            <column name="created" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="updated" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="4" author="amironnikov">
+        <insert tableName="user_account">
+            <column name="user_id" value="abaab40e-2c10-424f-80ec-b33f562440bf"/>
+            <column name="credit_limit" valueNumeric="1000"/>
+        </insert>
+    </changeSet>
 
 </databaseChangeLog>

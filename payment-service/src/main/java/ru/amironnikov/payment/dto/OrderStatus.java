@@ -1,9 +1,8 @@
-package ru.amironnikov.order.dto;
+package ru.amironnikov.payment.dto;
 
 public enum OrderStatus {
     CREATED,
-    PROCESSING,
-    SHIPPED,
     COMPLETED,
+    REJECTED,
     CANCELLED,
 }

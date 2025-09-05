@@ -10,11 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import productService.ProductOuterClass.Product;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
 import ru.amironnikov.order.dto.OrderDto;
 import ru.amironnikov.order.dto.OrderListDto;
 import ru.amironnikov.order.entity.OrderEntity;
 import ru.amironnikov.order.entity.OrderProductEntity;
+import ru.amironnikov.order.kafka.KafkaProducerService;
+import ru.amironnikov.order.kafka.OrderStatusDto;
 import ru.amironnikov.order.repository.OrderProductReactiveRepository;
 import ru.amironnikov.order.repository.OrderReactiveRepository;
 import ru.amironnikov.order.service.OrderService;
@@ -23,6 +24,8 @@ import ru.amironnikov.order.service.ProductGrpcService;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static ru.amironnikov.order.kafka.OrderStatus.CREATED;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -38,14 +41,18 @@ public class OrderServiceImpl implements OrderService {
     private final OrderReactiveRepository orderRepository;
     private final OrderProductReactiveRepository productRepository;
     private final ProductGrpcService productGrpcService;
+    private final KafkaProducerService producerService;
 
-    public OrderServiceImpl(MeterRegistry meterRegistry, OrderReactiveRepository orderRepository,
+    public OrderServiceImpl(MeterRegistry meterRegistry,
+                            OrderReactiveRepository orderRepository,
                             OrderProductReactiveRepository productRepository,
-                            ProductGrpcService productGrpcService) {
+                            ProductGrpcService productGrpcService,
+                            KafkaProducerService producerService) {
         this.meterRegistry = meterRegistry;
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
         this.productGrpcService = productGrpcService;
+        this.producerService = producerService;
     }
 
     @PostConstruct
@@ -88,7 +95,15 @@ public class OrderServiceImpl implements OrderService {
                             then(Mono.just(createdOrder.id()));
                 }
         ).doOnSuccess(
-                orderId -> logger.debug("Create order success, id: {}", orderId)
+                orderId -> {
+                    producerService.sendMessage(new OrderStatusDto(
+                            orderId,
+                            order.userId(),
+                            CREATED,
+                            totalCost
+                    ));
+                    logger.debug("Create order success, id: {}", orderId);
+                }
         );
 
     }

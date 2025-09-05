@@ -8,7 +8,7 @@ import org.springframework.data.relational.core.mapping.Table;
 import ru.amironnikov.order.dto.Order;
 import ru.amironnikov.order.dto.OrderDto;
 import ru.amironnikov.order.dto.OrderProduct;
-import ru.amironnikov.order.dto.OrderStatus;
+import ru.amironnikov.order.kafka.OrderStatus;
 
 
 import java.time.LocalDateTime;

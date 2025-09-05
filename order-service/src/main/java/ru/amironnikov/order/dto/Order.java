@@ -1,5 +1,7 @@
 package ru.amironnikov.order.dto;
 
+import ru.amironnikov.order.kafka.OrderStatus;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -19,7 +21,7 @@ public interface Order {
 
     int totalCost();
 
-    List<? extends OrderProduct>  products();
+    List<? extends OrderProduct> products();
 
     double totalWeight();
 }

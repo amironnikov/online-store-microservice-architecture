@@ -18,16 +18,14 @@ repositories {
     mavenLocal()
 }
 
+var postgresqlVersion = "42.7.7"
 dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.kafka:spring-kafka")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.3.0")
 
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-}
-
-tasks.test {
-    useJUnitPlatform()
+    implementation ("org.postgresql:postgresql:${postgresqlVersion}")
 }

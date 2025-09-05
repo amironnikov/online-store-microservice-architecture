@@ -1,5 +1,7 @@
 package ru.amironnikov.order.dto;
 
+import ru.amironnikov.order.kafka.OrderStatus;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
