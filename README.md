@@ -34,7 +34,7 @@
       docker-compose up -d
    ```
 
-Накатить liquibase миграции order-service, dictionaries-service через
+Накатить liquibase миграции через
 
   ```bash
       gradle update
