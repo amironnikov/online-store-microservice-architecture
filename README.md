@@ -160,6 +160,5 @@ Rate Limiter и Circuit Breaker применены в order-service.
     Пример класса: OrderServiceImpl.
 
 24) Kafka.
-    Kafka - producer в order-service при создании заказа. 
-    Kafka - consumer в payment-service.
+    Order-service и payment-service взаимодействуют через Kafka.
 

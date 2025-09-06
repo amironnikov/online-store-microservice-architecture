@@ -15,6 +15,16 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       retries: 10
       topic: order-status
+    consumer:
+      group-id: order-service-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      topic: order-status
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: java.util, java.lang, com.fasterxml.jackson.databind.node
 
 grpc:
   client:

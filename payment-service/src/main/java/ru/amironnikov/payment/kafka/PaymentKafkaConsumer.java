@@ -39,7 +39,6 @@ public class PaymentKafkaConsumer {
     public void listen(ObjectNode message) throws JsonProcessingException {
 
         OrderStatusDto orderStatus = objectMapper.treeToValue(message, OrderStatusDto.class);
-        logger.debug("Received message: {}", message);
 
         if (orderStatus.status() != OrderStatus.CREATED) {
             return;
