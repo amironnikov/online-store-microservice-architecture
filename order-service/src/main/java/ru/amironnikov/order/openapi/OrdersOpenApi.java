@@ -24,7 +24,8 @@ public interface OrdersOpenApi {
             description = "Create order REST endpoint")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Create order success"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
+            @ApiResponse(responseCode = "500", description = "Internal server error"),
+            @ApiResponse(responseCode = "429", description = "Too many requests")
     })
     Mono<CreatedEntityResponse> create(@RequestBody OrderDto order);
 
@@ -34,7 +35,8 @@ public interface OrdersOpenApi {
             description = "Get all orders for user by user-id")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Success return list"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
+            @ApiResponse(responseCode = "500", description = "Internal server error"),
+            @ApiResponse(responseCode = "429", description = "Too many requests")
     })
     Flux<OrderListDto> getAll(@RequestParam UUID userId);
 
@@ -43,7 +45,8 @@ public interface OrdersOpenApi {
             description = "Cancel order by id")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Cancel success"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
+            @ApiResponse(responseCode = "500", description = "Internal server error"),
+            @ApiResponse(responseCode = "429", description = "Too many requests")
     })
     Mono<StatusResponse> cancel(@PathVariable UUID id);
 }

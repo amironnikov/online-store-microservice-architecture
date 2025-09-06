@@ -28,7 +28,7 @@ public class ProductController implements ProductsOpenApi {
 
     @Override
     @GetMapping(RestEndPoint.PRODUCTS)
-    @RateLimiter(name = "rps_limiter", fallbackMethod = "getFallbackProducts")
+    @RateLimiter(name = "rps_limiter_prod", fallbackMethod = "getFallbackProducts")
     @CircuitBreaker(name = "products_circuit_breaker", fallbackMethod = "getFallbackProducts")
     public Flux<ProductDto> getAllProducts() {
         try {

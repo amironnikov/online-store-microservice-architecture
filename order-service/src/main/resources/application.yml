@@ -42,10 +42,23 @@ eureka:
 resilience4j:
   ratelimiter:
     instances:
-      rps_limiter:
+      rps_limiter_prod:
         limitForPeriod: 2
         limitRefreshPeriod: 1s
         timeoutDuration: 0s
+      rps_limiter_order_create:
+        limitForPeriod: 2
+        limitRefreshPeriod: 1s
+        timeoutDuration: 0s
+      rps_limiter_all:
+        limitForPeriod: 2
+        limitRefreshPeriod: 1s
+        timeoutDuration: 0s
+      rps_limiter_cancel:
+        limitForPeriod: 2
+        limitRefreshPeriod: 1s
+        timeoutDuration: 0s
+
   circuitbreaker:
     configs:
       default:

@@ -15,6 +15,7 @@ public interface ProductsOpenApi {
             description = "Products list fro orders")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Success"),
+            @ApiResponse(responseCode = "429", description = "Too many requests"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     Flux<ProductDto> getAllProducts();

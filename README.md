@@ -185,8 +185,6 @@ Rate Limiter и Circuit Breaker применены в order-service.
 20) Урок 38. Выполнение задач по расписанию в Java.
 В сервисе order-service в классе LoggingScheduler реализован простой планировщик для логгирования состояния БД.
 
-![img_14.png](images-for-report%2Fimg_14.png)
-
 21) Урок 16. Java.util.concurrent. Locks, ReadWriteLock, ReentrantLock.
 В сервисе image-service в классе ImageSoftReferenceServiceImpl используется ReadWriteLock.
 
