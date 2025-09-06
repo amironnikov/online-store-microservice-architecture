@@ -1,10 +1,43 @@
 # online-store-microservice-architecture
 Выпускной проект по курсу **OTUS Java Developer Advanced**
 
-### Сборка и запуск, выполнить в корне проекта:
+### Технологии и инструменты:
+* JDK 21
+* Spring Boot 3.5+,
+* Spring Cloud API Gateway
+* Spring Cloud Eureka
+* Kafka,
+* Postgres,
+* MiniIO,
+* GRPC,
+* Spring WebFlux,
+* Docker,
+* Docker compose
+* Liquibase,
+* Prometheus,
+* Grafana,
+* JMH
+
+### Сервисы:
+* order-service - сервис по управлению заказами (Создание, отмена, список)
+* payment-service - mock платежный сервис для заказов
+* dictionaries-service - сервис по управлению справочными данными (Список продуктов)
+* images-service - сервис по управлению изображениями (Для продуктов)
+* api-gateway - Gateway
+* service-registry - Реестр сервисов
+
+### Сборка и запуск
+
+Выполнить в корне проекта:
 
   ```bash
       docker-compose up -d
+   ```
+
+Накатить liquibase миграции order-service, dictionaries-service через
+
+  ```bash
+      gradle update
    ```
 
 ### Карта реализованных пунктов ТЗ
