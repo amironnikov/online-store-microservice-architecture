@@ -27,6 +27,7 @@ val grpcVersion = "1.66.0"
 val grpcClientVersion = "3.1.0.RELEASE"
 val protobufJavaVersion = "4.27.3"
 val annotationApiVersion = "1.3.2"
+val swaggerVersion= "2.6.0"
 
 dependencies {
 
@@ -35,6 +36,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-aop")
     implementation("org.springframework.kafka:spring-kafka")
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:$swaggerVersion")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.3.0")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 

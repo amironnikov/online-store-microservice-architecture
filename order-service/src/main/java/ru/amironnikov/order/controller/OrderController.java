@@ -10,12 +10,13 @@ import ru.amironnikov.order.dto.CreatedEntityResponse;
 import ru.amironnikov.order.dto.OrderDto;
 import ru.amironnikov.order.dto.OrderListDto;
 import ru.amironnikov.order.dto.StatusResponse;
+import ru.amironnikov.order.openapi.OrdersOpenApi;
 import ru.amironnikov.order.service.OrderService;
 
 import java.util.UUID;
 
 @RestController
-public class OrderController {
+public class OrderController implements OrdersOpenApi {
 
     private final OrderService orderService;
 
@@ -23,17 +24,20 @@ public class OrderController {
         this.orderService = orderService;
     }
 
+    @Override
     @PostMapping(RestEndPoint.ORDER)
     public Mono<CreatedEntityResponse> create(@RequestBody OrderDto order) {
         return orderService.create(order)
                 .map(CreatedEntityResponse::new);
     }
 
+    @Override
     @GetMapping(RestEndPoint.ORDER)
     public Flux<OrderListDto> getAll(@RequestParam UUID userId) {
         return orderService.getAll(userId);
     }
 
+    @Override
     @PostMapping(RestEndPoint.ORDER + "/cancel" + "/{id}")
     public Mono<StatusResponse> cancel(@PathVariable UUID id) {
         return orderService.cancel(id)

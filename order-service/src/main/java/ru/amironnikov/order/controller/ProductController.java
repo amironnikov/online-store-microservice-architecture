@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import ru.amironnikov.order.common.RestEndPoint;
 import ru.amironnikov.order.dto.ProductDto;
+import ru.amironnikov.order.openapi.ProductsOpenApi;
 import ru.amironnikov.order.service.ProductGrpcService;
 
 import java.util.Collections;
 import java.util.UUID;
 
 @RestController
-public class ProductController {
+public class ProductController implements ProductsOpenApi {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
@@ -25,6 +26,7 @@ public class ProductController {
         this.grpcService = grpcService;
     }
 
+    @Override
     @GetMapping(RestEndPoint.PRODUCTS)
     @RateLimiter(name = "rps_limiter", fallbackMethod = "getFallbackProducts")
     @CircuitBreaker(name = "products_circuit_breaker", fallbackMethod = "getFallbackProducts")
@@ -42,7 +44,7 @@ public class ProductController {
                                     product.getGuarantee()
                             )).toList()
             );
-        }  catch (Exception e){
+        } catch (Exception e) {
             logger.error(e.getMessage(), e);
             return Flux.error(e);
         }

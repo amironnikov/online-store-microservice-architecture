@@ -40,6 +40,11 @@
       gradle update
    ```
 
+Swagger:
+
+* image-service: http://localhost:8084/swagger-ui/index.html
+* order-service: http://localhost:8083/swagger-ui.html
+
 ### Карта реализованных пунктов ТЗ
 
 1) Урок 1. Java 11 vs 17 vs 21.
