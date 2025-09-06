@@ -6,6 +6,7 @@
 * Spring Boot 3.5+,
 * Spring Cloud API Gateway
 * Spring Cloud Eureka
+* Spring Cloud Resilience4j - RateLimiter, Circuit Breaker, Retry
 * Kafka,
 * Postgres,
 * MiniIO,
@@ -190,7 +191,7 @@ Rate Limiter и Circuit Breaker применены в order-service.
 В сервисе image-service в классе ImageSoftReferenceServiceImpl используется ReadWriteLock.
 
 22) Пункт ТЗ. Тесты с применением JMH.
-    В сервисе image-service реализованы тесты разных реализаций кэша для изображений.
+    В сервисе image-service реализованы JMH тесты разных реализаций кэша для изображений.
 23) Пункт ТЗ. В приложениях должны быть кеши, для хранения справочных данных из БД.
     Работа с кешами подразумевает использование пакета java.util.concurrent.
     Кэши есть в image-service, order-service, dictionaries-service.
