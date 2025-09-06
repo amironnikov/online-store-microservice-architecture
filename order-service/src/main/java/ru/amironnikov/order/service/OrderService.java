@@ -11,4 +11,6 @@ public interface OrderService {
     Mono<UUID> create(OrderDto order);
 
     Flux<OrderListDto> getAll(UUID userId);
+
+    Mono<Void> cancel(UUID orderId);
 }

@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static ru.amironnikov.order.kafka.OrderStatus.CREATED;
+import static ru.amironnikov.order.kafka.OrderStatus.*;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -121,6 +121,42 @@ public class OrderServiceImpl implements OrderService {
                         orderEntity.updated()
                 )
         );
+    }
+
+    @Override
+    public Mono<Void> cancel(UUID orderId) {
+        logger.debug("Cancel order request for id: {}", orderId);
+
+        //Нужно делать subscribe в конце, иначе цепочка не выполнится
+        orderRepository.findById(orderId)
+                .doOnError(error ->
+                        logger.error("Error processing order with id: {} : {}",
+                                orderId, error.getMessage()))
+                .doOnSuccess(
+                        order -> logger.debug("Order with id: {} cancel process started",
+                                orderId)
+                )
+                .flatMap(order -> {
+
+                    if (order.status() == CANCELLED) {
+                        logger.debug("Order with id: {} already cancelled", order.id());
+                        return Mono.empty();
+                    }
+
+                    logger.debug("Send cancel message to Kafka, for order: {}",
+                            orderId);
+                    producerService.sendMessage(new OrderStatusDto(
+                            orderId,
+                            order.userId(),
+                            CANCEL_REQUESTED,
+                            order.totalCost()
+                    ));
+
+                    return Mono.empty();
+                })
+                .subscribe();
+
+        return Mono.empty();
     }
 
     private int totalCost(OrderDto order) {

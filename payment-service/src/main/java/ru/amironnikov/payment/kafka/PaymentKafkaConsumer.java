@@ -38,13 +38,15 @@ public class PaymentKafkaConsumer {
     @Transactional
     public void listen(ObjectNode message) throws JsonProcessingException {
 
-        OrderStatusDto orderStatus = objectMapper.treeToValue(message, OrderStatusDto.class);
+        OrderStatusDto messageDto = objectMapper.treeToValue(message, OrderStatusDto.class);
+        OrderStatus status = messageDto.status();
 
-        if (orderStatus.status() != OrderStatus.CREATED) {
+        if (status != OrderStatus.CREATED &&
+                status != OrderStatus.CANCEL_REQUESTED) {
             return;
         }
 
-        UUID userId = orderStatus.userId();
+        UUID userId = messageDto.userId();
         Optional<UserAccount> accountOpt = repository.findById(userId);
         if (accountOpt.isEmpty()) {
             logger.error("Incorrect user ID: {}", userId);
@@ -52,30 +54,61 @@ public class PaymentKafkaConsumer {
         }
 
         UserAccount account = accountOpt.get();
+
+        if (status == OrderStatus.CREATED) {
+            processCreated(messageDto,
+                    account);
+            return;
+        }
+
+        processCancelled(messageDto,
+                account);
+    }
+
+    private void processCreated(OrderStatusDto messageDto,
+                                UserAccount account) {
+
         int limit = account.getCreditLimit();
 
-        if (limit < orderStatus.totalCost()) {
-            logger.warn("Not enough limit, user: {}", userId);
+        if (limit < messageDto.totalCost()) {
+            logger.warn("Not enough limit, user: {}", messageDto.userId());
             producerService.sendMessage(
                     new OrderStatusDto(
-                            orderStatus.id(),
-                            orderStatus.userId(),
+                            messageDto.id(),
+                            messageDto.userId(),
                             OrderStatus.REJECTED,
-                            orderStatus.totalCost()
+                            messageDto.totalCost()
                     )
             );
             return;
         }
 
-        account.setCreditLimit(account.getCreditLimit() - orderStatus.totalCost());
+        account.setCreditLimit(account.getCreditLimit() - messageDto.totalCost());
         producerService.sendMessage(
                 new OrderStatusDto(
-                        orderStatus.id(),
-                        orderStatus.userId(),
+                        messageDto.id(),
+                        messageDto.userId(),
                         OrderStatus.COMPLETED,
-                        orderStatus.totalCost()
+                        messageDto.totalCost()
                 )
         );
-        logger.debug("Order paid success, user: {}, order: {}", userId, orderStatus.id());
+        logger.debug("Order paid success, user: {}, order: {}",
+                account.getUserId(), messageDto.id());
     }
+
+    private void processCancelled(OrderStatusDto messageDto,
+                                  UserAccount account) {
+        account.setCreditLimit(account.getCreditLimit() + messageDto.totalCost());
+        producerService.sendMessage(
+                new OrderStatusDto(
+                        messageDto.id(),
+                        messageDto.userId(),
+                        OrderStatus.CANCELLED,
+                        messageDto.totalCost()
+                )
+        );
+        logger.debug("Cancel order success, user: {}, order: {}",
+                account.getUserId(), messageDto.id());
+    }
+
 }

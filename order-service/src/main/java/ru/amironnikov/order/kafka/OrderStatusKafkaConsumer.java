@@ -33,7 +33,8 @@ public class OrderStatusKafkaConsumer {
 
         OrderStatusDto orderStatus = objectMapper.treeToValue(message, OrderStatusDto.class);
 
-        if (orderStatus.status() == OrderStatus.CREATED) {
+        if (orderStatus.status() == OrderStatus.CREATED ||
+                orderStatus.status() == OrderStatus.CANCEL_REQUESTED) {
             return Mono.empty();
         }
 

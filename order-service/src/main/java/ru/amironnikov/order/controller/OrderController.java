@@ -9,6 +9,7 @@ import ru.amironnikov.order.common.RestEndPoint;
 import ru.amironnikov.order.dto.CreatedEntityResponse;
 import ru.amironnikov.order.dto.OrderDto;
 import ru.amironnikov.order.dto.OrderListDto;
+import ru.amironnikov.order.dto.StatusResponse;
 import ru.amironnikov.order.service.OrderService;
 
 import java.util.UUID;
@@ -31,5 +32,11 @@ public class OrderController {
     @GetMapping(RestEndPoint.ORDER)
     public Flux<OrderListDto> getAll(@RequestParam UUID userId) {
         return orderService.getAll(userId);
+    }
+
+    @PostMapping(RestEndPoint.ORDER + "/cancel" + "/{id}")
+    public Mono<StatusResponse> cancel(@PathVariable UUID id) {
+        return orderService.cancel(id)
+                .map(arg -> StatusResponse.ok());
     }
 }
